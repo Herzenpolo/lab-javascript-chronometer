@@ -1,3 +1,5 @@
+
+
 const chronometer = new Chronometer();
 
 // get the buttons:
@@ -15,10 +17,14 @@ let splits = document.getElementById('splits');
 
 function printTime() {
   // ... your code goes here
+  minUni.innerText = chronometer.twoDigitsNumber(chronometer.getMinutes())[1]
+  secUni.innerText = chronometer.twoDigitsNumber(chronometer.getSeconds())[1]
+  secDec.innerText = chronometer.twoDigitsNumber(chronometer.getSeconds())[0]
 }
 
 function printMinutes() {
   // ... your code goes here
+  
 }
 
 function printSeconds() {
@@ -32,6 +38,9 @@ function printMilliseconds() {
 
 function printSplit() {
   // ... your code goes here
+  let li = document.createElement(`li`)
+  li.innerText = chronometer.splitClick()
+  splits.appendChild(li)
 }
 
 function clearSplits() {
@@ -40,26 +49,53 @@ function clearSplits() {
 
 function setStopBtn() {
   // ... your code goes here
+  btnLeft.className = `btn stop`
+  btnLeft.innerHTML= `STOP`
 }
 
 function setSplitBtn() {
   // ... your code goes here
+  btnRight.className = `btn split`
+  btnRight.innerHTML= `SPLIT`
 }
 
 function setStartBtn() {
   // ... your code goes here
+  btnLeft.className = `btn start`
+  btnLeft.innerHTML= `START`
 }
 
 function setResetBtn() {
   // ... your code goes here
+  btnRight.className = `btn reset`
+  btnRight.innerHTML= `RESET`
 }
 
 // Start/Stop Button
 btnLeft.addEventListener('click', () => {
   // ... your code goes here
+  if(btnLeft.classList.contains("start")) {
+    chronometer.startClick(printTime) // start the timer
+    setStopBtn() // changing (aka toggle) the properties of the start button
+    setSplitBtn()
+  } else {
+    chronometer.stopClick()
+    setStartBtn()
+    setResetBtn()
+    chronometer.resetClick
+  }
+
 });
 
 // Reset/Split Button
 btnRight.addEventListener('click', () => {
   // ... your code goes here
+  if(btnRight.classList.contains("reset")) {
+    chronometer.resetClick()// reset clock
+  } else { // the timer is running 
+    printSplit()
+
+  }
 });
+
+
